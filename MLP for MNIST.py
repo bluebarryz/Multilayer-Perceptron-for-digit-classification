@@ -33,9 +33,6 @@ class multiLayer(nn.Module):
 model = multiLayer()
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
-#model.parameters() contains 10 weights, each of size 784, and 10 biases, each of size 1
-# print(len(list(model.parameters())[0][0]))
-
 
 numEpochs = 10
 train_loss = 0
@@ -61,18 +58,17 @@ for i in range(numEpochs):
         train_loss += loss.item()
         
     # Validation
-    
     with torch.no_grad():
         model.eval()
-        for images, labels in tqdm(val_loader):
-            
+        for images, labels in tqdm(val_loader): #Validation set
             x = images.view(-1, 28*28)
             y = model(x)
-            loss = criterion(y, labels)
+            loss = criterion(y, labels) #Calculate loss function for validation set
             val_loss += loss.item()
-            
-    train_loss /= len(train_loader.dataset)
-    val_loss /= len(val_loader.dataset)      
+    
+    
+    #train_loss /= len(train_loader.dataset)
+    val_loss /= len(val_loader.dataset)   #Avg loss 
     
     if val_loss < val_loss_min:
         torch.save(model.state_dict(), 'model.pt')
@@ -85,7 +81,7 @@ correct = 0
 total = len(mnist_test)
 
 with torch.no_grad():
-    # Iterate through test set minibatchs 
+    # Iterate through test set minibatches 
     for images, labels in tqdm(test_loader):
         # Forward pass
         x = images.view(-1, 28*28)

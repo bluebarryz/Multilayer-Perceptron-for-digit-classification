@@ -1,19 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri May 21 10:01:38 2021
-
-@author: BZ
-"""
-
-# -*- coding: utf-8 -*-
-"""
-Created on Fri May 21 09:50:39 2021
-
-@author: BZ
-"""
 
 import numpy as np
-import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

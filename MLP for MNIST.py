@@ -1,4 +1,3 @@
-
 import numpy as np
 import torch
 import torch.nn as nn
@@ -22,11 +21,12 @@ class multiLayer(nn.Module):
         super().__init__()
         self.layer1 = nn.Linear(784, 500) 
         self.layer2 = nn.Linear(500,10)
-        #lin is an attribute that contains the nested <Linear> model from pytorch
-
+        self.dropout = nn.Dropout(0.2)
     def forward(self, x):
         x = F.relu(self.layer1(x))
+        x = self.dropout(x)
         x = F.relu(self.layer2(x))
+        
         return x
     
 
@@ -71,8 +71,8 @@ for i in range(numEpochs):
             loss = criterion(y, labels)
             val_loss += loss.item()
             
-    train_loss = np.mean(train_loss)
-    val_loss = np.mean(val_loss)       
+    train_loss /= len(train_loader.dataset)
+    val_loss /= len(val_loader.dataset)      
     
     if val_loss < val_loss_min:
         torch.save(model.state_dict(), 'model.pt')
@@ -95,4 +95,3 @@ with torch.no_grad():
         correct += torch.sum((predictions == labels).float())
     
 print('Test accuracy: {}'.format(correct/total))
-

@@ -96,7 +96,3 @@ with torch.no_grad():
     
 print('Test accuracy: {}'.format(correct/total))
 
-# Get weights
-# fig, ax = plt.subplots(1, 10, figsize=(20, 2))
-# for digit in range(10):
-#     ax[digit].imshow(W[:,digit].detach().view(28,28), cmap='gray')
